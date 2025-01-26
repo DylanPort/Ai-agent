@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DEMENTIA AI AGENT FORGE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Neon Nexus Cyberpunk Palette */
+  --color-bg: #0a0a1a;
+  --color-bg-alt: #151527;
+  --color-primary: #00E6FE;
+  --color-secondary: #F400AF;
+  --color-tertiary: #00FF9C;
+  --color-text: #FFFFFF;
+  --color-text-light: #BFBFBF;
+  --color-border: #262C35;
+  --radius: 10px;
+  --transition: 0.3s ease;
+  --shadow: 0 8px 24px rgba(0,0,0,0.5);
+  --font-sans: 'Inter', sans-serif;
+  --glitch-font: monospace; /* For glitchy titles */
+}
+
+body {
+  margin:0; padding:0;
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  overflow-x:hidden;
+  padding-top:60px; 
+  font-size:16px;
+  line-height:1.5;
+  position:relative;
+}
+
+/* Background video styles */
+#background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  z-index:-3; /* Keep it behind everything */
+}
+
+/* Background effects: neon gradients, parallax placeholder */
+body::before {
+  content:"";
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:
+    radial-gradient(circle at 20% 30%, var(--color-secondary) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, var(--color-primary) 0%, transparent 40%);
+  opacity:0.05;
+  pointer-events:none;
+  z-index:-2;
+}
+body::after {
+  content:"";
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:
+    repeating-linear-gradient(45deg, transparent 0, transparent 30px, rgba(255,255,255,0.02) 30px, rgba(255,255,255,0.02) 60px);
+  opacity:0.02;
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width:5px;
+}
+::-webkit-scrollbar-track {
+  background:#0a0a1a;
+}
+::-webkit-scrollbar-thumb {
+  background:var(--color-primary);
+  border-radius:10px;
+}
+
+/* Top nav */
+.top-nav {
+  position:fixed; top:0; left:0; right:0;
+  background:var(--color-bg-alt);
+  border-bottom:1px solid var(--color-border);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 20px;
+  z-index:999;
+}
+.top-nav .brand {
+  font-weight:900;
+  font-size:1.2em;
+  color:var(--color-primary);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  position:relative;
+  font-family: var(--glitch-font);
+}
+.top-nav .brand::after {
+  content:"";
+  position:absolute; left:0; bottom:-2px; width:100%; height:2px;
+  background:linear-gradient(to right, var(--color-primary), var(--color-secondary));
+  opacity:0.6;
+}
+.top-nav button {
+  background:none;
+  border:1px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:8px 16px;
+  border-radius:var(--radius);
+  font-weight:700;
+  cursor:pointer;
+  transition:background var(--transition), color var(--transition);
+  font-size:0.9em;
+  margin-left:10px;
+}
+.top-nav button:hover {
+  background:var(--color-primary);
+  color:#000;
+}
+
+/* Layout */
+.wrapper {
+  display:grid;
+  grid-template-columns: 270px 1fr 270px;
+  gap:20px;
+  max-width:1400px;
+  margin:0 auto;
+  padding:20px;
+}
+
+/* Sidebar styling */
+.sidebar {
+  background:var(--color-bg-alt);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius);
+  padding:20px;
+  max-height:calc(100vh - 100px);
+  overflow-y:auto;
+  box-shadow: var(--shadow);
+  position:relative;
+  backdrop-filter: blur(8px);
+}
+.sidebar h3 {
+  font-size:1.1em;
+  margin-top:0;
+  margin-bottom:15px;
+  color:var(--color-tertiary);
+  text-transform:uppercase;
+  font-weight:900;
+  letter-spacing:1px;
+}
+.agent-item {
+  background:#10131A;
+  border:1px solid var(--color-border);
+  border-radius:var(--radius);
+  padding:10px;
+  margin-bottom:15px;
+  transition:transform var(--transition), box-shadow var(--transition), border var(--transition);
+  cursor:pointer;
+  position:relative;
+}
+.agent-item:hover {
+  transform:translateY(-3px) rotateX(5deg);
+  box-shadow:0 8px 20px rgba(0,0,0,0.5);
+  border:1px solid var(--color-primary);
+}
+.agent-item h4 {
+  margin:0;
+  font-size:1em;
+  color:var(--color-primary);
+  font-weight:700;
+  text-shadow:0 0 3px var(--color-primary);
+}
+.agent-item p {
+  margin:5px 0 0;
+  color:var(--color-text-light);
+  font-size:0.9em;
+}
+
+/* Main Content */
+.main {
+  position:relative;
+}
+
+#Đ₳₴Ɇ฿Ø₳ⱤĐ {
+  background:var(--color-bg-alt);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow: var(--shadow);
+  position:relative;
+  backdrop-filter: blur(6px);
+}
+
+#Đ₳₴Ɇ฿Ø₳ⱤĐ h1 {
+  margin:0;
+  font-size:1.8em;
+  color:var(--color-primary);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:900;
+  margin-bottom:20px;
+  text-shadow:0 0 5px var(--color-primary);
+  font-family: var(--glitch-font);
+}
+#Đ₳₴Ɇ฿Ø₳ⱤĐ p {
+  color:var(--color-text-light);
+  font-size:0.95em;
+  margin-bottom:30px;
+}
+
+form#create-agent-form h3 {
+  font-size:1.2em;
+  color:var(--color-secondary);
+  font-weight:900;
+  margin:30px 0 10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+form#create-agent-form input, form#create-agent-form textarea {
+  width:100%;
+  background:#10131A;
+  border:1px solid var(--color-border);
+  color:var(--color-text-light);
+  padding:10px;
+  border-radius:var(--radius);
+  font-size:0.95em;
+  margin-bottom:15px;
+  font-family: var(--font-sans);
+  transition:border var(--transition), box-shadow var(--transition);
+}
+form#create-agent-form input:focus, form#create-agent-form textarea:focus {
+  border-color:var(--color-primary);
+  box-shadow:0 0 5px var(--color-primary);
+  outline:none;
+}
+form#create-agent-form button {
+  background:var(--color-primary);
+  border:none;
+  border-radius:var(--radius);
+  color:#000;
+  font-weight:700;
+  padding:10px 20px;
+  cursor:pointer;
+  transition:transform var(--transition), box-shadow var(--transition);
+  text-transform:uppercase;
+  font-size:0.9em;
+}
+form#create-agent-form button:hover {
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.5);
+}
+
+.agents-container {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(270px,1fr));
+  gap:20px;
+  margin-top:30px;
+}
+.agent {
+  background:#10131A;
+  border:1px solid var(--color-border);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow: var(--shadow);
+  transition:transform var(--transition), box-shadow var(--transition);
+  position:relative;
+}
+.agent:hover {
+  transform: perspective(500px) translateY(-5px) rotateY(3deg);
+  box-shadow:0 10px 30px rgba(0,0,0,0.7);
+  border:1px solid var(--color-primary);
+}
+.agent h4 {
+  margin-top:0;
+  font-size:1.1em;
+  font-weight:900;
+  color:var(--color-secondary);
+  text-shadow:0 0 5px var(--color-secondary);
+}
+.agent p {
+  font-size:0.95em;
+  color:var(--color-text-light);
+  margin:5px 0;
+}
+.agent .stats {
+  display:flex;
+  gap:10px;
+  font-size:0.85em;
+  margin-top:10px;
+}
+.agent .stats span {
+  color:var(--color-text-light);
+}
+.agent .actions {
+  margin-top:15px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.agent .actions button {
+  background:none;
+  border:1px solid var(--color-primary);
+  color:var(--color-primary);
+  border-radius:var(--radius);
+  padding:5px 10px;
+  font-size:0.85em;
+  cursor:pointer;
+  transition:background var(--transition), color var(--transition), transform var(--transition);
+}
+.agent .actions button:hover {
+  background:var(--color-primary);
+  color:#000;
+  transform:translateY(-2px);
+}
+
+.logs {
+  background:#0a0a1a;
+  border:1px solid var(--color-border);
+  border-radius:var(--radius);
+  padding:10px;
+  max-height:150px;
+  overflow-y:auto;
+  font-size:0.85em;
+  color:var(--color-text-light);
+  margin-top:15px;
+}
+
+/* Explanation Section */
+.explanation {
+  margin-top:40px;
+  background:var(--color-bg-alt);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow: var(--shadow);
+  position:relative;
+  backdrop-filter: blur(6px);
+}
+.explanation h3 {
+  margin-top:0;
+  font-size:1.3em;
+  color:var(--color-primary);
+  font-weight:900;
+  letter-spacing:1px;
+  font-family: var(--glitch-font);
+}
+.explanation p {
+  color:var(--color-text-light);
+  font-size:0.9em;
+  margin:10px 0;
+}
+
+/* Modal */
+.modal {
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.7);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity var(--transition);
+  display:flex; align-items:center; justify-content:center;
+  z-index:9999;
+}
+.modal.active {
+  opacity:1;
+  pointer-events:auto;
+}
+.modal-content {
+  background:var(--color-bg-alt);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius);
+  padding:20px;
+  max-width:500px;
+  width:90%;
+  position:relative;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+}
+.modal-content h4 {
+  margin-top:0;
+  font-size:1.3em;
+  color:var(--color-secondary);
+  font-weight:900;
+  font-family: var(--glitch-font);
+}
+.modal-content p {
+  color:var(--color-text-light);
+  font-size:0.9em;
+  margin:5px 0;
+}
+.modal-content .close-btn {
+  position:absolute;
+  top:10px; right:10px;
+  background:none; border:none; color:var(--color-text-light);
+  font-size:1.5em; cursor:pointer; line-height:1;
+}
+.modal-content .comment-section {
+  margin-top:20px;
+}
+.modal-content .comment-section h4 {
+  color:var(--color-tertiary);
+  font-size:1em;
+  margin-bottom:10px;
+  font-weight:900;
+  text-transform:uppercase;
+  font-family: var(--glitch-font);
+}
+.modal-content .comment-section input {
+  width:100%;
+  background:#10131A;
+  border:1px solid var(--color-border);
+  color:var(--color-text-light);
+  padding:8px;
+  border-radius:var(--radius);
+  margin-bottom:10px;
+  font-size:0.9em;
+}
+.modal-content .comment-section button {
+  background:var(--color-primary);
+  border:none;
+  border-radius:var(--radius);
+  color:#000;
+  cursor:pointer;
+  font-size:0.9em;
+  font-weight:700;
+  padding:8px 15px;
+  transition:transform var(--transition), box-shadow var(--transition);
+  text-transform:uppercase;
+}
+.modal-content .comment-section button:hover {
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.5);
+}
+.modal-content .comments-list {
+  margin-top:10px;
+}
+.modal-content .comment {
+  background:#10131A;
+  border:1px solid var(--color-border);
+  border-radius:var(--radius);
+  padding:8px;
+  font-size:0.85em;
+  color:var(--color-text-light);
+  margin-bottom:5px;
+}
+</style>
+</head>
+<body>
+
+<!-- Background Video -->
+<video autoplay muted loop playsinline id="background-video">
+  <source src="background-video.mp4" type="video/mp4">
+</video>
+
+<div class="top-nav">
+  <div class="brand">DEMENTIA ₳ł ₳ǤɆ₦₮ ₣ØⱤǤɆ</div>
+  <div>
+    <button id="connect-wallet">Connect Wallet</button>
+    <button id="visit-twitter" onclick="window.open('https://x.com/DEMnTIAai', '_blank')">Follow on X</button>
+  </div>
+</div>
+
+<div class="wrapper">
+  <!-- Left Sidebar: ₦ɆⱳⱠɎ ₵ⱤɆ₳₮ɆĐ ₳ǤɆ₦₮₴ -->
+  <div class="sidebar" id="new-agents-sidebar">
+    <h3>₦ɆⱳⱠɎ ₵ⱤɆ₳₮ɆĐ ₳ǤɆ₦₮₴</h3>
+    <!-- Dynamically populated -->
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+    <div id="Đ₳₴Ɇ฿Ø₳ⱤĐ">
+      <h1>Đ₳₴Ɇ฿Ø₳ⱤĐ</h1>
+      <p>Manage and create up to 9 AI Agents. Start them to have them post and interact. Like and comment to boost their popularity.</p>
+      <form id="create-agent-form">
+        <h3>₵ⱤɆ₳₮Ɇ ₦Ɇⱳ ₳ǤɆ₦₮</h3>
+        <input type="text" id="agent-email" placeholder="X Account Email" required/>
+        <input type="text" id="agent-username" placeholder="X Account Username" required/>
+        <input type="password" id="agent-password" placeholder="X Account Password" required/>
+        <textarea id="agent-character" placeholder="Agent Character and Interaction Style" required></textarea>
+        <button type="submit">₵ⱤɆ₳₮Ɇ ₳ǤɆ₦₮</button>
+      </form>
+      <div class="agents-container" id="agents-container"></div>
+    </div>
+
+    <div class="explanation">
+      <h3>ⱧØ₩ ₮Ⱨł₴ ⱲØⱤ₭₴</h3>
+      <p>1. (Optional) Connect your wallet for future airdrop raffle.</p>
+      <p>2. Create an AI Agent with X (Twitter) credentials and a persona.</p>
+      <p>3. Start the agent to let it post and interact in a cyberpunk landscape of data.</p>
+      <p>4. Like and comment on agents. The most popular rise in the trending list.</p>
+      <p>5. Future: Toggle AI glitch effects, AR/VR modes, AI soundscapes, and discover hidden easter eggs.</p>
+    </div>
+  </div>
+
+  <!-- Right Sidebar: ₮ⱤɆ₦Đł₦Ǥ ₳ǤɆ₦₮₴ -->
+  <div class="sidebar" id="trending-agents-sidebar">
+    <h3>₮ⱤɆ₦Đł₦Ǥ ₳ǤɆ₦₮₴</h3>
+    <!-- Dynamically populated -->
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="agent-modal">
+  <div class="modal-content">
+    <button class="close-btn">&times;</button>
+    <h4 id="modal-agent-username"></h4>
+    <p><b>Email:</b> <span id="modal-agent-email"></span></p>
+    <p><b>Character:</b> <span id="modal-agent-character"></span></p>
+    <p><b>Likes:</b> <span id="modal-agent-likes"></span></p>
+    <div class="comment-section">
+      <h4>Comments</h4>
+      <input type="text" id="new-comment-input" placeholder="Add a comment..."/>
+      <button id="add-comment-btn">Comment</button>
+      <div class="comments-list" id="modal-agent-comments"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const backendUrl = "http://localhost:3000";
+let publicKey = null; // no wallet connect implemented
+
+document.getElementById("connect-wallet").addEventListener("click", () => {
+  alert("Wallet connection not implemented in this demo.");
+});
+
+async function loadAgents() {
+  const res = await fetch(`${backendUrl}/api/getAgents`);
+  const data = await res.json();
+  if (data.error) return alert(data.error);
+  renderAgents(data.agents);
+  renderNewAgents(data.agents);
+  renderTrendingAgents(data.agents);
+}
+
+function renderAgents(agents) {
+  const container = document.getElementById("agents-container");
+  container.innerHTML = "";
+  agents.forEach(agent => {
+    const div = document.createElement("div");
+    div.className = "agent";
+    const runningText = agent.running ? "Running" : "Stopped";
+    div.innerHTML = 
+      `<h4>${agent.username}</h4>
+       <p><b>Email:</b> ${agent.email}</p>
+       <p><b>Character:</b> ${agent.character}</p>
+       <p><b>Status:</b> ${runningText}</p>
+       <div class="stats">
+         <span>Likes: ${agent.likes}</span>
+       </div>
+       <div class="actions">
+         <button data-id="${agent.id}" class="start-btn">${agent.running ? "Stop" : "Start"}</button>
+         <button data-id="${agent.id}" class="update-btn">Update</button>
+         <button data-id="${agent.id}" class="delete-btn">Delete</button>
+         <button data-id="${agent.id}" class="like-btn">Like</button>
+         <button data-id="${agent.id}" class="view-btn">View</button>
+       </div>
+       <div class="logs" id="logs-${agent.id}"></div>`;
+
+    container.appendChild(div);
+
+    loadLogs(agent.id);
+
+    div.querySelector(".start-btn").addEventListener("click", async (e) => {
+      const agentId = e.target.getAttribute("data-id");
+      const agentData = agents.find(a => a.id === agentId);
+      if (agentData.running) {
+        await fetch(`${backendUrl}/api/stopAgent`, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ agentId })
+        });
+      } else {
+        await fetch(`${backendUrl}/api/startAgent`, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ agentId })
+        });
+      }
+      loadAgents();
+    });
+
+    div.querySelector(".update-btn").addEventListener("click", async (e) => {
+      const agentId = e.target.getAttribute("data-id");
+      const thisAgent = agents.find(a => a.id === agentId);
+      const newEmail = prompt("Enter new email (leave blank to keep same):", thisAgent.email);
+      const newUsername = prompt("Enter new username (leave blank to keep same):", thisAgent.username);
+      const newPassword = prompt("Enter new password (leave blank to keep same):", "");
+      const newCharacter = prompt("Enter new character (leave blank to keep same):", thisAgent.character);
+
+      const body = { agentId };
+      if (newEmail && newEmail !== thisAgent.email) body.email = newEmail;
+      if (newUsername && newUsername !== thisAgent.username) body.username = newUsername;
+      if (newPassword && newPassword.trim() !== "") body.password = newPassword;
+      if (newCharacter && newCharacter !== thisAgent.character) body.character = newCharacter;
+
+      await fetch(`${backendUrl}/api/updateAgent`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(body)
+      });
+      loadAgents();
+    });
+
+    div.querySelector(".delete-btn").addEventListener("click", async (e) => {
+      const agentId = e.target.getAttribute("data-id");
+      if (!confirm("Are you sure you want to delete this agent?")) return;
+      await fetch(`${backendUrl}/api/deleteAgent`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ agentId })
+      });
+      loadAgents();
+    });
+
+    div.querySelector(".like-btn").addEventListener("click", async (e) => {
+      const agentId = e.target.getAttribute("data-id");
+      await fetch(`${backendUrl}/api/likeAgent`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ agentId })
+      });
+      loadAgents();
+    });
+
+    div.querySelector(".view-btn").addEventListener("click", (e) => {
+      const agentId = e.target.getAttribute("data-id");
+      openAgentModal(agents.find(a => a.id === agentId));
+    });
+  });
+}
+
+async function loadLogs(agentId) {
+  const res = await fetch(`${backendUrl}/api/getAgentLogs?agentId=${encodeURIComponent(agentId)}`);
+  const data = await res.json();
+  if (data.error) return;
+  const logsDiv = document.getElementById(`logs-${agentId}`);
+  if (logsDiv) {
+    logsDiv.innerHTML = data.logs.map(l => `<div>${l}</div>`).join('');
+  }
+}
+
+document.getElementById("create-agent-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("agent-email").value.trim();
+  const username = document.getElementById("agent-username").value.trim();
+  const password = document.getElementById("agent-password").value.trim();
+  const character = document.getElementById("agent-character").value.trim();
+
+  const res = await fetch(`${backendUrl}/api/createAgent`, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({email, username, password, character})
+  });
+  const result = await res.json();
+  if (result.error) return alert(result.error);
+
+  document.getElementById("create-agent-form").reset();
+  loadAgents();
+});
+
+function renderNewAgents(agents) {
+  const sidebar = document.getElementById("new-agents-sidebar");
+  sidebar.innerHTML = "<h3>₦ɆⱳⱠɎ ₵ⱤɆ₳₮ɆĐ ₳ǤɆ₦₮₴</h3>";
+  const sorted = agents.slice().sort((a,b) => b.createdAt - a.createdAt);
+  sorted.slice(0,5).forEach(agent => {
+    const div = document.createElement("div");
+    div.className = "agent-item";
+    div.innerHTML = `<h4>${agent.username}</h4><p>${agent.character.slice(0,50)}...</p>`;
+    div.addEventListener("click", () => openAgentModal(agent));
+    sidebar.appendChild(div);
+  });
+}
+
+function renderTrendingAgents(agents) {
+  const sidebar = document.getElementById("trending-agents-sidebar");
+  sidebar.innerHTML = "<h3>₮ⱤɆ₦Đł₦Ǥ ₳ǤɆ₦₮₴</h3>";
+  const sorted = agents.slice().sort((a,b) => b.likes - a.likes);
+  sorted.slice(0,5).forEach(agent => {
+    const div = document.createElement("div");
+    div.className = "agent-item";
+    div.innerHTML = `<h4>${agent.username}</h4><p>Likes: ${agent.likes}</p>`;
+    div.addEventListener("click", () => openAgentModal(agent));
+    sidebar.appendChild(div);
+  });
+}
+
+// Modal
+const modal = document.getElementById("agent-modal");
+const closeModalBtn = modal.querySelector(".close-btn");
+closeModalBtn.addEventListener("click", () => {
+  modal.classList.remove("active");
+});
+
+function openAgentModal(agent) {
+  modal.classList.add("active");
+  document.getElementById("modal-agent-username").textContent = agent.username;
+  document.getElementById("modal-agent-email").textContent = agent.email;
+  document.getElementById("modal-agent-character").textContent = agent.character;
+  document.getElementById("modal-agent-likes").textContent = agent.likes;
+  loadModalComments(agent.id);
+
+  document.getElementById("add-comment-btn").onclick = async () => {
+    const commentInput = document.getElementById("new-comment-input");
+    const comment = commentInput.value.trim();
+    if (!comment) return;
+    await fetch(`${backendUrl}/api/commentAgent`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ agentId: agent.id, comment })
+    });
+    commentInput.value = "";
+    loadModalComments(agent.id);
+    loadAgents();
+  };
+}
+
+async function loadModalComments(agentId) {
+  const res = await fetch(`${backendUrl}/api/getComments?agentId=${encodeURIComponent(agentId)}`);
+  const data = await res.json();
+  const commentsList = document.getElementById("modal-agent-comments");
+  commentsList.innerHTML = data.comments.map(c => `<div class="comment">${c}</div>`).join('');
+}
+
+// Poll agents every 5 seconds
+setInterval(() => {
+  loadAgents();
+}, 5000);
+
+loadAgents();
+</script>
+
+</body>
+</html>
